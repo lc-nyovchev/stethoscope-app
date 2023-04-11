@@ -1,9 +1,9 @@
 osVersion:
   darwin:
-    # Big Sur
-    ok: ">=11.5.1"
-    # Catalina
-    nudge: ">=10.15.7"
+    # Ventura
+    ok: ">=13.3.1"
+    # Monterey
+    nudge: ">=12.6"
   win32:
     # Version 21H2
     ok: ">=10.0.19043"
@@ -13,15 +13,14 @@ osVersion:
     ok: ">=10.0.14393"
     nudge: ">=10.0.10240"
   ubuntu:
-    ok: ">=20.04.2"
-    nudge: ">=18.04.5"
+    ok: ">=22.04"
+    nudge: ">=20.04.2"
   linux:
-    ok: ">=20.04.2"
-    nudge: ">=18.04.5"
+    ok: ">=22.04"
+    nudge: ">=20.04.2"
 firewall: ALWAYS
 diskEncryption: ALWAYS
 automaticUpdates: SUGGESTED
 screenLock: IF_SUPPORTED
-screenIdle: "<=120"
 remoteLogin: NEVER
 openWifiConnections: SUGGESTED
