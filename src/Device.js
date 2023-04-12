@@ -61,14 +61,16 @@ class Device extends Component {
   }
 
   renderApplicationStateMessage = ({ state, version, installed, policy = {} }) => {
-    const installPrompt = policy.installFrom ? (
-      <p>
-        Install from{' '}
-        <a href={policy.installFrom} target='_blank' rel='noopener noreferrer'>
-          here
-        </a>
-      </p>
-    ) : null
+    const installPrompt = policy.installFrom
+      ? (
+        <p>
+          Install from{' '}
+          <a href={policy.installFrom} target='_blank' rel='noopener noreferrer'>
+            here
+          </a>
+        </p>
+        )
+      : null
     if (state === INVALID_INSTALL_STATE && !installed) {
       return <p>You must have this application installed.{installPrompt}</p>
     } else if (state === INVALID_INSTALL_STATE && installed) {

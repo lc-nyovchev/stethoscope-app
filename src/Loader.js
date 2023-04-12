@@ -39,25 +39,27 @@ export default class Loader extends React.Component {
             <span role='img' aria-label='Thinking face'>🤔</span>
           </div>
           <div className='loaderAdditionalContent'>
-            {recentHang ? (
-              <div>
-                <span>There seems to be a problem, contact support?</span>
-                {this.props.children}
-                <pre>
-                  <code>
-                    {`Version: ${this.props.version}
+            {recentHang
+              ? (
+                <div>
+                  <span>There seems to be a problem, contact support?</span>
+                  {this.props.children}
+                  <pre>
+                    <code>
+                      {`Version: ${this.props.version}
                   Platform: ${this.props.platform}
                   Recent Logs:
                   ${this.props.recentLogs}`}
-                  </code>
-                </pre>
-              </div>
-            ) : (
-              <div>
-              Sometimes restarting Stethoscope can resolve slow loading issues.<br />
-                <button onClick={onRestart}>Restart Application</button>
-              </div>
-            )}
+                    </code>
+                  </pre>
+                </div>
+                )
+              : (
+                <div>
+                  Sometimes restarting Stethoscope can resolve slow loading issues.<br />
+                  <button onClick={onRestart}>Restart Application</button>
+                </div>
+                )}
           </div>
         </span>
       )
