@@ -1,4 +1,4 @@
-const { notarize } = require('electron-notarize')
+const { notarize } = require('@electron/notarize')
 const pkg = require('../package.json')
 const {
   APPLE_API_KEY,
