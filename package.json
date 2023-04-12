@@ -47,7 +47,6 @@
     "babel:compile": "cross-env BABEL_ENV=production babel src/ --out-dir compiled/ --copy-files"
   },
   "dependencies": {
-    "@babel/register": "^7.4.4",
     "applescript": "^1.0.0",
     "auto-launch": "^5.0.5",
     "body-parser": "^1.18.2",
@@ -84,16 +83,11 @@
     "winston-daily-rotate-file": "^3.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/preset-env": "7.4.4",
-    "@babel/preset-react": "^7.0.0",
-    "@heroku/foreman": "^2.0.2",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-minify": "^0.5.0",
-    "babel-register": "^6.26.0",
-    "benchmark": "^2.1.4",
+    "@babel/cli": "7.21.0",
+    "@babel/core": "7.21.4",
+    "@babel/preset-env": "7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/register": "^7.21.0",
     "electron": "^7.1.0",
     "electron-builder": "21.2.0",
     "enzyme": "^3.3.0",
