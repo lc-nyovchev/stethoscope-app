@@ -29,8 +29,6 @@ import iconFinder from './lib/findIcon'
 import startGraphQLServer from './server'
 import { IS_MAC, IS_WIN } from './lib/platform'
 import AutoLauncher from './AutoLauncher'
-import updateInit from './updater'
-
 const env = process.env.STETHOSCOPE_ENV || 'production'
 const findIcon = iconFinder(env)
 const IS_DEV = env === 'development'
@@ -44,7 +42,6 @@ let server
 let updater
 let launchIntoUpdater = false
 let deeplinkingUrl
-let isLaunching = true
 let isFirstLaunch = false
 // icons that are displayed in the Menu bar
 const statusImages = {
@@ -88,7 +85,7 @@ const focusOrCreateWindow = (mainWindow) => {
     mainWindow.show()
   } else {
     mainWindow = new BrowserWindow(windowPrefs)
-    initMenu(mainWindow, app, focusOrCreateWindow, updater, log)
+    initMenu(mainWindow, app, focusOrCreateWindow)
     mainWindow.loadURL(BASE_URL)
   }
   return mainWindow
@@ -116,17 +113,6 @@ async function createWindow () {
     mainWindow.webContents.openDevTools()
   }
 
-  // required at run time so dependencies can be injected
-  updater = updateInit(env, mainWindow, log, server, focusOrCreateWindow)
-
-  if (isLaunching) {
-    updater.checkForUpdates({}, {}, {}, true)
-    // check for updates in background
-    const EVERY_DAY = 86400 * 1000
-    setInterval(() => updater.checkForUpdates({}, {}, {}, true), EVERY_DAY)
-    isLaunching = false
-  }
-
   if (isFirstLaunch && !IS_TEST) {
     dialog.showMessageBox({
       type: 'info',
@@ -141,7 +127,6 @@ async function createWindow () {
         autoLauncher.disable()
       }
     })
-    isLaunching = false
   }
 
   if (tray) tray.destroy()
@@ -151,7 +136,7 @@ async function createWindow () {
     mainWindow = focusOrCreateWindow(mainWindow)
   })
 
-  tray.on('right-click', () => tray.popUpContextMenu(initMenu(mainWindow, app, focusOrCreateWindow, updater, log)))
+  tray.on('right-click', () => tray.popUpContextMenu(initMenu(mainWindow, app, focusOrCreateWindow)))
 
   // these methods allow express to update app state
   const appHooksForServer = {
@@ -161,9 +146,6 @@ async function createWindow () {
         next = statusImages[status]
       }
       tray.setImage(next)
-    },
-    requestUpdate () {
-      updater.checkForUpdates()
     },
     enableDebugger: enableAppDebugger,
     requestLogPermission (origin) {
@@ -204,7 +186,7 @@ async function createWindow () {
   })
 
   // add right-click menu to app
-  ipcMain.on('contextmenu', event => initMenu(mainWindow, app, focusOrCreateWindow, updater, log).popup({ window: mainWindow }))
+  ipcMain.on('contextmenu', event => initMenu(mainWindow, app, focusOrCreateWindow).popup({ window: mainWindow }))
 
   // allow web app to restart application
   ipcMain.on('app:restart', () => {

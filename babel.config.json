@@ -19,7 +19,6 @@
   ],
   "exclude": [
     "./.git/",
-    "./bitlocker-status/",
     "./build/",
     "./dist/",
     "./docs/",

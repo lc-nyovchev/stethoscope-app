@@ -10,8 +10,7 @@ const toggleAutoLaunchMenus = (autoLaunchOn) => {
   autoLaunchMenuOptions.getMenuItemById('autolaunchOff').checked = !autoLaunchOn
 }
 
-export default function (mainWindow, app, focusOrCreateWindow, updater, log) {
-  const { checkForUpdates } = updater
+export default function (mainWindow, app, focusOrCreateWindow) {
   const autoLauncher = new AutoLauncher()
   const isAutoLauncherEnabled = autoLauncher.isEnabled()
 
@@ -57,12 +56,6 @@ export default function (mainWindow, app, focusOrCreateWindow, updater, log) {
         }
       ]
     },
-    {
-      label: 'Check for Update',
-      click (event) {
-        checkForUpdates(this, mainWindow, event)
-      }
-    },
     { role: 'separator', enabled: false }
   ].concat({
     label: 'Help',
@@ -101,12 +94,6 @@ export default function (mainWindow, app, focusOrCreateWindow, updater, log) {
     submenu: [{
       label: `Stethoscope version ${pkg.version}`,
       enabled: false
-    },
-    {
-      label: 'Check for Update',
-      click (event) {
-        checkForUpdates(this, mainWindow, event)
-      }
     },
     { role: 'copy', accelerator: 'CmdOrCtrl+C' },
     { role: 'quit', accelerator: 'CmdOrCtrl+Q' }
