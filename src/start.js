@@ -22,12 +22,11 @@ import initMenu from './Menu'
 import config from './config.json'
 import { MINIMUM_AUTOSCAN_INTERVAL_SECONDS } from './constants'
 import settings from 'electron-settings'
-import serializeError from 'serialize-error'
 import initProtocols from './lib/protocolHandlers'
 import loadReactDevTools from './lib/loadReactDevTools'
 import iconFinder from './lib/findIcon'
 import startGraphQLServer from './server'
-import { IS_MAC, IS_WIN } from './lib/platform'
+import { IS_MAC } from './lib/platform'
 import AutoLauncher from './AutoLauncher'
 const env = process.env.STETHOSCOPE_ENV || 'production'
 const findIcon = iconFinder(env)
@@ -100,8 +99,6 @@ async function createWindow () {
   // wait for process to load before hiding in dock, prevents the app
   // from flashing into view and then hiding
   if (!IS_DEV && IS_MAC) setImmediate(() => app.dock.hide())
-  // windows detection of deep link path
-  if (IS_WIN) deeplinkingUrl = process.argv.slice(1)
   // only allow resize if debugging production build
   if (!IS_DEV && !enableDebugger) windowPrefs.resizable = false
 
@@ -171,7 +168,7 @@ async function createWindow () {
   // start GraphQL server, close the app if 37370 is already in use
   server = await startGraphQLServer(env, log, language, appHooksForServer)
   server.on('error', error => {
-    log.info(`startup:express:error ${JSON.stringify(serializeError(error))}`)
+    log.info(`startup:express:error ${error}`)
     if (error.message.includes('EADDRINUSE')) {
       dialog.showMessageBox({
         message: 'Something is already using port 37370'
@@ -260,8 +257,6 @@ if (!gotTheLock) {
   app.quit()
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
-    if (IS_WIN) deeplinkingUrl = commandLine.slice(1)
-
     if (String(deeplinkingUrl).indexOf('update') > -1) {
       updater.checkForUpdates(env, mainWindow, log).catch(err => {
         log.error(`error checking for update: ${err}`)

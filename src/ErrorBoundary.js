@@ -1,15 +1,4 @@
 import React from 'react'
-import serializeError from 'serialize-error'
-
-let log = console
-let remote
-
-try {
-  remote = window.require('electron').remote
-  log = remote.getGlobal('log')
-} catch (e) {
-  // browser context
-}
 
 export default class ErrorBoundary extends React.Component {
   constructor (props) {
@@ -18,8 +7,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch (error, info) {
-    this.setState({ hasError: true, error: serializeError(error) })
-    log.error(JSON.stringify(serializeError(error)))
+    this.setState({ hasError: true, error })
   }
 
   render () {
