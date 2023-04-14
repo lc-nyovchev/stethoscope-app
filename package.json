@@ -62,7 +62,7 @@
     "extend": "^3.0.2",
     "fast-glob": "^2.2.6",
     "glob": "^7.1.6",
-    "graphql": "^14.3.1",
+    "graphql": "^15.8.0",
     "graphql-server-express": "^1.2.0",
     "@graphql-tools/schema": "^9.0.18",
     "handlebars": "^4.7.7",
