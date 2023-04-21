@@ -1,6 +1,6 @@
 {
   "name": "Stethoscope",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "private": true,
   "homepage": "./",
   "author": "Netflix",
@@ -105,7 +105,7 @@
     "not op_mini all"
   ],
   "build": {
-    "appId": "com.netflix.stethoscope-local",
+    "appId": "com.relay42.stethoscope-local",
     "extends": null,
     "productName": "Stethoscope",
     "directories": {
